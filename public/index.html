@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app="PairTime">
+	<head>
+		<meta charset="utf-8">
+		<title>PairTime - pairing tool</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+		<script src="angular-dragdrop.min.js"></script>
+		<script src="app.js"></script>
+		<link rel="stylesheet" href="app.css"></link>
+	</head>
+	<body>
+		<h1>PairTime - pair shuffler</h1>
+		<p>Welcome to PairTime, a tool to generate pairings for your team.</p>
+		<ol>
+			<li>Add some names.</li>
+			<li>Drag people to swap them and keep story owners apart.</li>
+			<li>Lock story owners in place.</li>
+			<li>Shuffle; lock people in who are happy with their pairing.</li>
+			<li>Shuffle and lock until the team is happily paired.</li>
+			<li>(save coming soon)</li>
+		</ol>
+		<h5><a href="javascript:void(0)" id="toggleBlurb">Who did this?</a> | <a href="javascript:void(0)" id="toggleTodo">Todo</a> | <a href="javascript:void(0)" id="toggleTips">Tips</a></h5>
+		<small id="blurb">
+			<p>G'day! I'm Chris Adams, Aussie pivot based in SF.</p>
+			<p>I got sick of people staring at each other in standups, waiting for someone to pair them.</p>
+			<p>Fun trivia, the first deployment was done to Pivotal CF on the tarmac in Sydney about to fly to San Francisco. If I can grab the client tools and deploy over a tethered connection, on a plane, in the time before takeoff - anyone can deploy to Cloud Foundry.</p>
+		</small>
+		<div id="todo">
+			<h4>Todo</h4>
+			<ul>
+				<li>Allow pairs to be labeled eg. by story (I tried this and it turned out too fiddly)</li>
+				<li>Rework as test-driven code (the whole thing is a spike right now)</li>
+				<li>Save team and past pairings to backend (team can then be accessed with a URL)</li>
+				<li>Use team knowledge to affect shuffle - eg. avoid pairing people the same way 2 days in a row</li>
+				<li>Show past pairings for your team</li>
+			</ul>
+		</div>
+		<div id="tips">
+			<h4>Tips</h4>
+			<ul>
+				<li>Click add when all slots are full to add an empty pair.</li>
+				<li>You can lock people as soloing by locking an empty slot next to them.</li>
+			</ul>
+		</div>
+		<h2>Pull Requests/Contact</h2>
+		<ul>
+			<li>GitHub: <a href="https://github.com/thecadams">https://github.com/thecadams/pairtime</a></li>
+			<li>Email: <a href="mailto:cadams@pivotallabs.com">cadams@pivotallabs.com</a></li>
+		</ul>
+		<hr>
+		<div ng-controller="PairController" class="controller">
+			<div class="help" ng-hide="pairs.length">Add some names to get started.</div>
+			<div class="pair" ng-repeat="pair in pairs">
+				<div ng-repeat="person in pair" ng-class="{true:'locked',false:'unlocked',null:'empty'}[person.name==null?null:person.locked]" class="person" data-drag="true" data-drop="true" jqyoui-draggable="{index:{{$index}},revert:'invalid'}" jqyoui-droppable="{index:{{$index}},multiple:true}" ng-model="pair">
+					<span ng-show="person.name.length">{{person.name}}</span>
+					<span ng-hide="person.name.length">(empty)</span>
+					<div class="actions">
+						<div ng-hide="person.locked" class="action lock" ng-click="lock(person)">lock</div>
+						<div ng-show="person.locked" class="action unlock" ng-click="unlock(person)">unlock</div>
+						<div class="action delete" ng-click="delete(person)" ng-show="person.name.length">delete</div>
+					</div>
+				</div>
+			</div>
+			<div class="add">
+				<input type="text" id="newName" ng-model="newName" ng-keypress="addOnEnter($event)"></input>
+				<div class="actions">
+					<div class="action add" ng-click="add()">add</div>
+				</div>
+			</div>
+			<div class="pair-actions">
+				<div class="action shuffle" ng-click="shuffle()">shuffle</div>
+			</div>
+		</div>
+		<a href="https://github.com/thecadams/pairtime"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+	</body>
+</html>

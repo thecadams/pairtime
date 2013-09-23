@@ -1,0 +1,8 @@
+---
+applications:
+- name: pairtime
+  memory: 256M
+  instances: 1
+  host: pairtime
+  domain: cfapps.io
+  path: .

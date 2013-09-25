@@ -19,18 +19,23 @@ App.controller('PairController', function($scope) {
 		removeEmptyPairs();
 	}
 	$scope.add = function() {
-		var newName = $scope.newName;
+		var newNames = $scope.newName.split(',');
 		$scope.newName=null;
+		for (var i=0; i<newNames.length; i++) {
+			insertOrAdd(newNames[i].trim());
+		}
+	}
+	function insertOrAdd(name) {
 		for (var pair_idx=0; pair_idx<$scope.pairs.length; pair_idx++) {
 			for (var person_idx=0; person_idx<2; person_idx++) {
 				person = $scope.pairs[pair_idx][person_idx];
 				if (!person.locked && person.name==null) {
-					person.name=newName;
+					person.name=name;
 					return;
 				}
 			}
 		}
-		$scope.pairs.push(newPair(newName,null));
+		$scope.pairs.push(newPair(name,null));
 	}
 	$scope.addOnEnter = function(ev) {
 		if (ev.which==13) $scope.add();

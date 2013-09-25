@@ -4,7 +4,7 @@ input {
 	margin:8px;
 	width:75%;
 }
-.pair { margin:20px 0 20px 0; }
+.pair { margin:20px 0; }
 .person {
 	cursor:ns-resize;
 	display:block;
@@ -14,13 +14,15 @@ input {
 .person.empty { background-color:#ddd; }
 .add { background-color:#cceeff; }
 .actions { float:right; }
-.action.add:hover { background-color:#33cc33; }
+.actions .add:hover { background-color:#33cc33; }
+.pair-actions .shuffle:hover { background-color: #33ff33; }
+.pair-actions .shuffle:active { background-color: #ccffcc; }
 .actions .unlock { background-color:#ff8833; }
 .actions .lock:hover { background-color:#ff9966; }
 .actions .delete:hover { background-color:#ff0000; }
 .person {
 	overflow:auto;
-	margin:4px 0 4px 0;
+	margin:4px 0;
 	padding:8px 12px;
 }
 .help, .add .actions { margin: 8px; }
@@ -34,9 +36,9 @@ input {
 	display:block;
 }
 .actions, .pair-actions {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
 }
 .action {
 	cursor:pointer;

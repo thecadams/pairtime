@@ -1,23 +1,18 @@
-$(document).ready(function(){
-	$('#newName').focus();
-
-	$('#toggleBlurb').click(function(){
-		$('#blurb').toggle();
-	});
-	$('#toggleTodo').click(function(){
-		$('#todo').toggle();
-	});
-	$('#toggleTips').click(function(){
-		$('#tips').toggle();
-	});
-});
-
 var App = angular.module('PairTime', ['ngDragDrop']);
+App.directive('ngFocus', function($timeout) {
+	return {
+		link: function(scope, element, attrs) {
+			scope.$watch(attrs.ngFocus, function() {
+				$timeout(function() {
+					element[0].focus();
+				});
+			}, true);
+		}
+	};
+});
 App.controller('PairController', function($scope) {
 	$scope.pairs = [];
 	$scope.newName = null;
-	$scope.lock = function(person) { person.locked = true; }
-	$scope.unlock = function(person) { person.locked = false; }
 	$scope.delete = function(person) {
 		person.name = null;
 		person.locked = false;

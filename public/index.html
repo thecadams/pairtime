@@ -10,7 +10,7 @@
 		<script src="app.js"></script>
 		<link rel="stylesheet" href="app.css"></link>
 	</head>
-	<body>
+	<body ng-controller="PairController">
 		<h1>PairTime - pair shuffler</h1>
 		<p>Welcome to PairTime, a tool to generate pairings for your team.</p>
 		<ol>
@@ -21,13 +21,13 @@
 			<li>Shuffle and lock until the team is happily paired.</li>
 			<li>(save coming soon)</li>
 		</ol>
-		<h5><a href="javascript:void(0)" id="toggleBlurb">Who did this?</a> | <a href="javascript:void(0)" id="toggleTodo">Todo</a> | <a href="javascript:void(0)" id="toggleTips">Tips</a></h5>
-		<small id="blurb">
+		<h5><a href="javascript:void(0)" ng-click="blurb=!blurb">Who did this?</a> | <a href="javascript:void(0)" ng-click="todo=!todo">Todo</a> | <a href="javascript:void(0)" ng-click="tips=!tips">Tips</a></h5>
+		<small ng-show="blurb">
 			<p>G'day! I'm Chris Adams, Aussie pivot based in SF.</p>
 			<p>I got sick of people staring at each other in standups, waiting for someone to pair them.</p>
 			<p>Fun trivia, the first deployment was done to Pivotal CF on the tarmac in Sydney about to fly to San Francisco. If I can grab the client tools and deploy over a tethered connection, on a plane, in the time before takeoff - anyone can deploy to Cloud Foundry.</p>
 		</small>
-		<div id="todo">
+		<div ng-show="todo">
 			<h4>Todo</h4>
 			<ul>
 				<li>Allow pairs to be labeled eg. by story (I tried this and it turned out too fiddly)</li>
@@ -37,7 +37,7 @@
 				<li>Show past pairings for your team</li>
 			</ul>
 		</div>
-		<div id="tips">
+		<div ng-show="tips">
 			<h4>Tips</h4>
 			<ul>
 				<li>Click add when all slots are full to add an empty pair.</li>
@@ -50,21 +50,21 @@
 			<li>Email: <a href="mailto:cadams@pivotallabs.com">cadams@pivotallabs.com</a></li>
 		</ul>
 		<hr>
-		<div ng-controller="PairController" class="controller">
+		<div class="ten-foot">
 			<div class="help" ng-hide="pairs.length">Add some names to get started.</div>
 			<div class="pair" ng-repeat="pair in pairs">
 				<div ng-repeat="person in pair" ng-class="{true:'locked',false:'unlocked',null:'empty'}[person.name==null?null:person.locked]" class="person" data-drag="true" data-drop="true" jqyoui-draggable="{index:{{$index}},revert:'invalid'}" jqyoui-droppable="{index:{{$index}},multiple:true}" ng-model="pair">
 					<span ng-show="person.name.length">{{person.name}}</span>
 					<span ng-hide="person.name.length">(empty)</span>
 					<div class="actions">
-						<div ng-hide="person.locked" class="action lock" ng-click="lock(person)">lock</div>
-						<div ng-show="person.locked" class="action unlock" ng-click="unlock(person)">unlock</div>
+						<div ng-hide="person.locked" class="action lock" ng-click="person.locked=true">lock</div>
+						<div ng-show="person.locked" class="action unlock" ng-click="person.locked=false">unlock</div>
 						<div class="action delete" ng-click="delete(person)" ng-show="person.name.length">delete</div>
 					</div>
 				</div>
 			</div>
 			<div class="add">
-				<input type="text" id="newName" ng-model="newName" ng-keypress="addOnEnter($event)"></input>
+				<input type="text" ng-focus ng-model="newName" ng-keypress="addOnEnter($event)"></input>
 				<div class="actions">
 					<div class="action add" ng-click="add()">add</div>
 				</div>

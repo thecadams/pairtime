@@ -1,5 +1,5 @@
 body { font-family: Helvetica, Arial, sans-serif; }
-.controller, .controller input { font-size: 30px; }
+.ten-foot, .ten-foot input { font-size: 30px; }
 input {
 	margin:8px;
 	width:75%;
@@ -47,4 +47,3 @@ input {
 	padding:0px 4px;
 }
 .person, .action { border-radius:4px; }
-#blurb, #todo, #tips { display:none; }

@@ -56,8 +56,7 @@ App.controller('PairController', function($scope) {
 		}
 		return locked;
 	}
-	function fisherYates(count,lockedIndices) {
-		console.log('fisherYates',count,lockedIndices);
+	function fisherYates(count, lockedIndices) {
 		for (var i = count-1; i > 0; i--) {
 			var indexToSwapWith = getRandomInt(0, i);
 			swapPeople(i, indexToSwapWith, lockedIndices);

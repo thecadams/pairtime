@@ -53,7 +53,7 @@
 		<div class="ten-foot">
 			<div class="help" ng-hide="pairs.length">Add some names to get started.</div>
 			<div class="pair" ng-repeat="pair in pairs">
-				<div ng-repeat="person in pair" ng-class="{true:'locked',false:'unlocked',null:'empty'}[person.name==null?null:person.locked]" class="person" data-drag="true" data-drop="true" jqyoui-draggable="{index:{{$index}},revert:'invalid'}" jqyoui-droppable="{index:{{$index}},multiple:true}" ng-model="pair">
+				<div ng-repeat="person in pair" ng-class="{true:'locked',false:'unlocked',null:'empty'}[person.name==null?null:person.locked]" class="person" data-drag="true" data-drop="true" jqyoui-draggable="{index:{{$index}}}" data-jqyoui-options="{revert:'invalid'}" jqyoui-droppable="{index:{{$index}},multiple:true}" ng-model="pair">
 					<span ng-show="person.name.length">{{person.name}}</span>
 					<span ng-hide="person.name.length">(empty)</span>
 					<div class="actions">
